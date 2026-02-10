@@ -11,7 +11,7 @@ export class NavigationService {
 
   loadNavigation(): void {
     this.http
-      .get<NavigationItem[]>('/assets/docs-navigation.json')
+      .get<NavigationItem[]>('assets/docs-navigation.json')
       .subscribe({
         next: (data) => this.navigation.set(data),
         error: () => this.navigation.set([]),
