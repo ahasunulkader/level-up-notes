@@ -10,12 +10,12 @@ export class NavigationService {
   constructor(private http: HttpClient) {}
 
   loadNavigation(): void {
-    this.http
-      .get<NavigationItem[]>('assets/docs-navigation.json')
-      .subscribe({
-        next: (data) => this.navigation.set(data),
-        error: () => this.navigation.set([]),
-      });
+    const base = document.querySelector('base')?.href || document.baseURI;
+    const url = new URL('assets/docs-navigation.json', base).href;
+    this.http.get<NavigationItem[]>(url).subscribe({
+      next: (data) => this.navigation.set(data),
+      error: () => this.navigation.set([]),
+    });
   }
 
   setActiveRoute(route: string): void {

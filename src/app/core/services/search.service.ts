@@ -33,7 +33,9 @@ export class SearchService {
       let contentMatches: string[] = [];
 
       try {
-        const path = '/assets/docs/' + item.route.split('/').map((s) => encodeURIComponent(s)).join('/') + '.md';
+        const relative = 'assets/docs/' + item.route.split('/').map((s) => encodeURIComponent(s)).join('/') + '.md';
+        const base = document.querySelector('base')?.href || document.baseURI;
+        const path = new URL(relative, base).href;
         const content = await firstValueFrom(
           this.http.get(path, { responseType: 'text' })
         );
