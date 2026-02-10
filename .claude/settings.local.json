@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm run generate:nav:*)",
+      "Bash(npx ng serve:*)",
+      "Bash(node -e:*)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(findstr:*)",
+      "Bash(more:*)"
+    ]
+  }
+}

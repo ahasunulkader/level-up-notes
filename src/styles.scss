@@ -1,0 +1,220 @@
+/* Prism.js theme is loaded via angular.json styles array */
+
+/* ===== GLOBAL RESET & THEME ===== */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+  color: #1e293b;
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* ===== MARKDOWN BODY STYLES ===== */
+.markdown-body {
+  max-width: 820px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #334155;
+}
+
+.markdown-body h1 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.markdown-body h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 40px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.markdown-body h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1e293b;
+  margin-top: 32px;
+  margin-bottom: 8px;
+}
+
+.markdown-body h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+
+.markdown-body p {
+  margin-bottom: 16px;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.markdown-body li {
+  margin-bottom: 6px;
+}
+
+.markdown-body li > ul,
+.markdown-body li > ol {
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+
+/* Inline code */
+.markdown-body code:not([class*="language-"]) {
+  background: #f1f5f9;
+  color: #d946ef;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875em;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  border: 1px solid #e2e8f0;
+}
+
+/* Code blocks — dark bg for contrast with colorful syntax */
+.markdown-body pre {
+  background: #272822 !important;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.markdown-body pre code {
+  background: none !important;
+  color: inherit;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+}
+
+/* Blockquote */
+.markdown-body blockquote {
+  border-left: 4px solid #2563eb;
+  background: #eff6ff;
+  padding: 12px 20px;
+  margin-bottom: 16px;
+  border-radius: 0 8px 8px 0;
+  color: #475569;
+}
+
+.markdown-body blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tables */
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.markdown-body th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.markdown-body td {
+  padding: 10px 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.markdown-body tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+/* Horizontal rule */
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 32px 0;
+}
+
+/* Images */
+.markdown-body img {
+  max-width: 100%;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin: 12px 0;
+}
+
+/* Strong & em */
+.markdown-body strong {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.markdown-body em {
+  color: #64748b;
+}
+
+/* Links in markdown */
+.markdown-body a {
+  color: #2563eb;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.markdown-body a:hover {
+  border-bottom-color: #2563eb;
+  text-decoration: none;
+}

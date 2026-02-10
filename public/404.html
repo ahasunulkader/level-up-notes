@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Level Up Notes</title>
+  <script>
+    // GitHub Pages SPA redirect hack
+    // Converts path to query param so index.html can handle it
+    const path = window.location.pathname;
+    const query = window.location.search;
+    window.location.replace(
+      window.location.origin + '/?p=' + encodeURIComponent(path) + (query ? '&q=' + encodeURIComponent(query) : '')
+    );
+  </script>
+</head>
+<body>
+  Redirecting...
+</body>
+</html>

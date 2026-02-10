@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Laravel",
+    "children": [
+      {
+        "label": "Laravel Essentials",
+        "route": "Laravel/laravel-essentials"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "PHP",
+    "children": [
+      {
+        "label": "PHP Basics",
+        "route": "PHP/php-basics"
+      }
+    ],
+    "expanded": false
+  }
+]

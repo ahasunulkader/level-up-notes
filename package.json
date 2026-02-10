@@ -1,0 +1,46 @@
+{
+  "name": "level-up-notes",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "generate:nav": "node scripts/generate-docs-nav.js",
+    "start": "npm run generate:nav && ng serve",
+    "build": "npm run generate:nav && ng build",
+    "build:prod": "npm run generate:nav && ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "deploy:github": "npm run build:prod && npx angular-cli-ghpages --dir=dist/level-up-notes/browser"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "packageManager": "npm@11.6.2",
+  "dependencies": {
+    "@angular/common": "^21.1.0",
+    "@angular/compiler": "^21.1.0",
+    "@angular/core": "^21.1.0",
+    "@angular/forms": "^21.1.0",
+    "@angular/platform-browser": "^21.1.0",
+    "@angular/router": "^21.1.0",
+    "marked": "^12.0.2",
+    "prismjs": "^1.30.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.1.3",
+    "@angular/cli": "^21.1.3",
+    "@angular/compiler-cli": "^21.1.0",
+    "@types/prismjs": "^1.26.5",
+    "typescript": "~5.9.2"
+  }
+}
