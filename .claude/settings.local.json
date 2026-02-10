@@ -9,7 +9,11 @@
       "Bash(npm install:*)",
       "Bash(npm uninstall:*)",
       "Bash(findstr:*)",
-      "Bash(more:*)"
+      "Bash(more:*)",
+      "WebFetch(domain:ahasunulkader.github.io)",
+      "Bash(gh run list:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(git rm:*)"
     ]
   }
 }
