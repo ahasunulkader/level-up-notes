@@ -25,16 +25,25 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
-      - run: npm ci
+      - run: npm install
 
-      - run: npm run generate:nav
-
-      - run: npx ng build --configuration production
+      - name: Build Angular app
+        run: |
+          npm run generate:nav
+          npx ng build --configuration production
+          echo "Build completed successfully"
+          ls -la dist/level-up-notes/browser/
 
       - name: Copy 404 page for SPA routing
-        run: cp dist/level-up-notes/browser/index.html dist/level-up-notes/browser/404.html
+        run: |
+          if [ -f dist/level-up-notes/browser/index.html ]; then
+            cp dist/level-up-notes/browser/index.html dist/level-up-notes/browser/404.html
+            echo "404 page copied successfully"
+          else
+            echo "ERROR: index.html not found!"
+            exit 1
+          fi
 
       - uses: actions/configure-pages@v5
 
