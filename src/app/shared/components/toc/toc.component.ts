@@ -36,28 +36,34 @@ interface TocItem {
     }
   `,
   styles: [`
-    .toc {
+    :host {
       position: sticky;
-      top: 80px;
-      width: 220px;
-      min-width: 220px;
+      top: 76px;
+      align-self: flex-start;
+      max-height: calc(100vh - 90px);
+    }
+    .toc {
+      width: 240px;
+      min-width: 240px;
       padding: 16px 0;
-      max-height: calc(100vh - 100px);
       overflow-y: auto;
+      max-height: calc(100vh - 90px);
     }
     .toc-title {
-      font-size: 11px;
+      font-size: 13px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #94a3b8;
-      padding: 0 8px;
-      margin-bottom: 12px;
+      letter-spacing: 1.2px;
+      color: #64748b;
+      padding: 0 10px;
+      margin-bottom: 14px;
     }
     .toc-link {
       display: block;
-      padding: 4px 8px;
-      font-size: 13px;
-      color: #94a3b8;
+      padding: 5px 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: #64748b;
       text-decoration: none;
       border-left: 2px solid #e2e8f0;
       cursor: pointer;
@@ -67,13 +73,16 @@ interface TocItem {
       white-space: nowrap;
     }
     .toc-link:hover {
-      color: #475569;
+      color: #334155;
+      background: #f8fafc;
     }
     .toc-link.active {
       color: #2563eb;
       border-left-color: #2563eb;
+      font-weight: 500;
     }
     @media (max-width: 1100px) {
+      :host { display: none; }
       .toc { display: none; }
     }
   `],

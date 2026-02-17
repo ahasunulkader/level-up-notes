@@ -33,8 +33,8 @@ import { TocComponent } from '../../../../shared/components/toc/toc.component';
     </div>
   `,
   styles: [`
-    .doc-viewer-layout { display: flex; gap: 32px; }
-    .doc-viewer { flex: 1; min-width: 0; max-width: 820px; }
+    .doc-viewer-layout { display: flex; gap: 48px; }
+    .doc-viewer { flex: 1; min-width: 0; }
     .loading { display: flex; flex-direction: column; align-items: center; padding: 60px 0; color: #94a3b8; gap: 12px; }
     .spinner { width: 32px; height: 32px; border: 3px solid #e2e8f0; border-top-color: #2563eb; border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -84,12 +84,17 @@ export class DocViewerComponent implements OnInit, OnDestroy {
       const filePath = `assets/docs/${docPath}.md`;
       const html = await this.markdownService.fetchAndParse(filePath);
 
-      // Add IDs to headings for TOC
+      // Add unique IDs to headings for TOC
+      const idCounts: Record<string, number> = {};
       const htmlWithIds = html.replace(
         /<h([1-4])([^>]*)>(.*?)<\/h[1-4]>/gi,
         (_match: string, level: string, attrs: string, content: string) => {
           const text = content.replace(/<[^>]*>/g, '').trim();
-          const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          let id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          idCounts[id] = (idCounts[id] || 0) + 1;
+          if (idCounts[id] > 1) {
+            id = `${id}-${idCounts[id]}`;
+          }
           return `<h${level} id="${id}"${attrs}>${content}</h${level}>`;
         }
       );

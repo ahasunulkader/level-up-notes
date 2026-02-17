@@ -36,10 +36,10 @@ import { NavigationService } from '../../core/services/navigation.service';
     }
     .docs-content {
       flex: 1;
-      padding: 32px 40px;
+      padding: 32px 48px;
       margin-left: 280px;
-      max-width: 100%;
-      overflow-x: hidden;
+      min-width: 0;
+      overflow-x: clip;
       background: #ffffff;
     }
     .mobile-overlay {
