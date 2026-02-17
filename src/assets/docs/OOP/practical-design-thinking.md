@@ -6,9 +6,152 @@ Knowing OOP theory is great, but **knowing when to use what** is what separates 
 
 ## 1. Composition vs Inheritance
 
+### What is Composition?
+
+Composition means **building a class by combining smaller objects inside it** instead of inheriting from a parent class. The class doesn't DO the work itself — it **delegates** to the objects it holds.
+
+> **Simple way to remember:** Inheritance = "I AM a ___" | Composition = "I HAVE a ___"
+
+```
+Inheritance:  Car extends Vehicle (Car IS-A Vehicle)
+Composition:  Car has an Engine, has Wheels, has GPS (Car HAS these things)
+```
+
+### Real-World Example — Order Processing
+
+Imagine building an order system. You need: payment, notification, and inventory management. Watch how composition makes this clean.
+
+```php
+// Step 1: Define small, focused classes (each does ONE thing)
+
+class PaymentService
+{
+    public function charge(float $amount, string $method): bool
+    {
+        echo "Charged $$amount via $method\n";
+        return true;
+    }
+
+    public function refund(float $amount): bool
+    {
+        echo "Refunded $$amount\n";
+        return true;
+    }
+}
+
+class NotificationService
+{
+    public function sendEmail(string $to, string $subject): void
+    {
+        echo "Email to $to: $subject\n";
+    }
+
+    public function sendSms(string $to, string $message): void
+    {
+        echo "SMS to $to: $message\n";
+    }
+}
+
+class InventoryService
+{
+    public function reserve(int $productId, int $qty): bool
+    {
+        echo "Reserved $qty of product #$productId\n";
+        return true;
+    }
+
+    public function release(int $productId, int $qty): void
+    {
+        echo "Released $qty of product #$productId\n";
+    }
+}
+```
+
+```php
+// Step 2: COMPOSE them into OrderService (HAS-A relationship)
+
+class OrderService
+{
+    // OrderService HAS a PaymentService
+    // OrderService HAS a NotificationService
+    // OrderService HAS an InventoryService
+    public function __construct(
+        private PaymentService $payment,
+        private NotificationService $notification,
+        private InventoryService $inventory
+    ) {}
+
+    public function placeOrder(array $order): bool
+    {
+        // Delegate to InventoryService
+        $this->inventory->reserve($order['product_id'], $order['qty']);
+
+        // Delegate to PaymentService
+        $success = $this->payment->charge($order['total'], 'bkash');
+
+        if (!$success) {
+            $this->inventory->release($order['product_id'], $order['qty']);
+            return false;
+        }
+
+        // Delegate to NotificationService
+        $this->notification->sendEmail($order['email'], 'Order Confirmed!');
+        $this->notification->sendSms($order['phone'], 'Your order is placed!');
+
+        return true;
+    }
+
+    public function cancelOrder(array $order): void
+    {
+        $this->payment->refund($order['total']);
+        $this->inventory->release($order['product_id'], $order['qty']);
+        $this->notification->sendEmail($order['email'], 'Order Cancelled');
+    }
+}
+
+// Usage
+$orderService = new OrderService(
+    new PaymentService(),
+    new NotificationService(),
+    new InventoryService()
+);
+
+$orderService->placeOrder([
+    'product_id' => 1,
+    'qty' => 2,
+    'total' => 599.99,
+    'email' => 'user@mail.com',
+    'phone' => '01700000000',
+]);
+```
+
+### Why This is Powerful
+
+- **Each class is small and testable** — test PaymentService alone without the rest
+- **Easy to swap** — replace `PaymentService` with `StripePaymentService` without touching OrderService
+- **No inheritance chain** — no fragile parent-child hierarchy
+- **Reusable** — `NotificationService` can be used by OrderService, UserService, ReportService, etc.
+- **Laravel does this everywhere** — Controllers compose Services, Services compose Repositories
+
+### How Inheritance Would Fail Here
+
+```php
+// BAD — Can't inherit from 3 classes!
+class OrderService extends PaymentService, NotificationService, InventoryService
+{
+    // PHP Fatal Error: Class cannot extend multiple classes!
+}
+
+// BAD — Even with single inheritance, it makes no sense
+class OrderService extends PaymentService
+{
+    // OrderService IS-A PaymentService? No! It just USES payment.
+}
+```
+
 ### The Rule: **Favor Composition Over Inheritance**
 
-This is one of the most important design principles. Let's understand why.
+This is one of the most important design principles. Let's understand why with a direct comparison.
 
 ### Inheritance Approach (Fragile)
 
