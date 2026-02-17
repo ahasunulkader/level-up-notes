@@ -1,22 +1,10 @@
-import { Component, ElementRef, inject, signal, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, inject, signal, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { filter, Subscription } from 'rxjs';
 import { MarkdownService } from '../../../../core/services/markdown.service';
 import { NavigationService } from '../../../../core/services/navigation.service';
 import { TocComponent } from '../../../../shared/components/toc/toc.component';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-typescript';
-import 'prismjs/components/prism-javascript';
-import 'prismjs/components/prism-php';
-import 'prismjs/components/prism-python';
-import 'prismjs/components/prism-java';
-import 'prismjs/components/prism-sql';
-import 'prismjs/components/prism-bash';
-import 'prismjs/components/prism-json';
-import 'prismjs/components/prism-yaml';
-import 'prismjs/components/prism-css';
-import 'prismjs/components/prism-scss';
 
 @Component({
   selector: 'app-doc-viewer',
@@ -38,7 +26,7 @@ import 'prismjs/components/prism-scss';
             <p class="error-detail">{{ errorDetail() }}</p>
           </div>
         } @else {
-          <article #articleEl class="markdown-body" [innerHTML]="safeHtml()" (click)="handleClick($event)"></article>
+          <article class="markdown-body" [innerHTML]="safeHtml()" (click)="handleClick($event)"></article>
         }
       </div>
       <app-toc [htmlContent]="rawHtml()" />
@@ -58,8 +46,6 @@ import 'prismjs/components/prism-scss';
   `],
 })
 export class DocViewerComponent implements OnInit, OnDestroy {
-  @ViewChild('articleEl') articleEl?: ElementRef<HTMLElement>;
-
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
   private markdownService = inject(MarkdownService);
@@ -83,17 +69,6 @@ export class DocViewerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.routeSub?.unsubscribe();
-  }
-
-  private highlightCode(): void {
-    setTimeout(() => {
-      if (this.articleEl) {
-        Prism.highlightAllUnder(this.articleEl.nativeElement);
-      } else {
-        // Fallback: highlight all code blocks on the page
-        Prism.highlightAll();
-      }
-    }, 50);
   }
 
   private async loadDocument(): Promise<void> {
@@ -122,9 +97,6 @@ export class DocViewerComponent implements OnInit, OnDestroy {
       this.rawHtml.set(htmlWithIds);
       this.safeHtml.set(this.sanitizer.bypassSecurityTrustHtml(htmlWithIds));
       this.loading.set(false);
-
-      // Highlight code after DOM renders
-      this.highlightCode();
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err: any) {

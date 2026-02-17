@@ -1,5 +1,23 @@
 [
   {
+    "label": "Design Patterns",
+    "children": [
+      {
+        "label": "Behavioral Design Patterns in PHP",
+        "route": "Design-Patterns/behavioral-patterns"
+      },
+      {
+        "label": "Creational Design Patterns in PHP",
+        "route": "Design-Patterns/creational-patterns"
+      },
+      {
+        "label": "Structural Design Patterns in PHP",
+        "route": "Design-Patterns/structural-patterns"
+      }
+    ],
+    "expanded": false
+  },
+  {
     "label": "Laravel",
     "children": [
       {
@@ -10,11 +28,45 @@
     "expanded": false
   },
   {
+    "label": "OOP",
+    "children": [
+      {
+        "label": "Core OOP Concepts in PHP",
+        "route": "OOP/core-oop-concepts"
+      },
+      {
+        "label": "Practical Design Thinking in PHP",
+        "route": "OOP/practical-design-thinking"
+      }
+    ],
+    "expanded": false
+  },
+  {
     "label": "PHP",
     "children": [
       {
         "label": "PHP Basics",
         "route": "PHP/php-basics"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "SOLID",
+    "children": [
+      {
+        "label": "SOLID Principles in PHP",
+        "route": "SOLID/solid-principles"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "System Design",
+    "children": [
+      {
+        "label": "System Design Basics",
+        "route": "System-Design/system-design-basics"
       }
     ],
     "expanded": false
