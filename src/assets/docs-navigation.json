@@ -1,5 +1,27 @@
 [
   {
+    "label": "API Design",
+    "children": [
+      {
+        "label": "Idempotency & Backward Compatibility",
+        "route": "API-Design/idempotency-and-backward-compatibility"
+      },
+      {
+        "label": "REST Principles & HTTP Methods",
+        "route": "API-Design/rest-principles-and-http"
+      },
+      {
+        "label": "HTTP Status Codes & Error Response Design",
+        "route": "API-Design/status-codes-and-error-handling"
+      },
+      {
+        "label": "API Versioning, Pagination & Filtering",
+        "route": "API-Design/versioning-pagination-filtering"
+      }
+    ],
+    "expanded": false
+  },
+  {
     "label": "Design Patterns",
     "children": [
       {
