@@ -22,6 +22,30 @@
     "expanded": false
   },
   {
+    "label": "Concurrency",
+    "children": [
+      {
+        "label": "Concurrency & Parallelism",
+        "route": "Concurrency/concurrency-and-parallelism"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "Data And Persistence",
+    "children": [
+      {
+        "label": "Data & Persistence Concepts",
+        "route": "Data-and-Persistence/data-persistence-concepts"
+      },
+      {
+        "label": "SQL Hands-on Practice",
+        "route": "Data-and-Persistence/sql-practice"
+      }
+    ],
+    "expanded": false
+  },
+  {
     "label": "Design Patterns",
     "children": [
       {
@@ -64,11 +88,59 @@
     "expanded": false
   },
   {
+    "label": "Performance",
+    "children": [
+      {
+        "label": "Performance & Scalability Thinking",
+        "route": "Performance/performance-and-scalability"
+      }
+    ],
+    "expanded": false
+  },
+  {
     "label": "PHP",
     "children": [
       {
+        "label": "PHP Arrays",
+        "route": "PHP/arrays"
+      },
+      {
+        "label": "PHP Control Structures",
+        "route": "PHP/control-structures"
+      },
+      {
+        "label": "PHP Date & Time",
+        "route": "PHP/date-and-time"
+      },
+      {
+        "label": "PHP Error Handling",
+        "route": "PHP/error-handling"
+      },
+      {
+        "label": "PHP File System",
+        "route": "PHP/file-system"
+      },
+      {
+        "label": "PHP Functions",
+        "route": "PHP/functions"
+      },
+      {
+        "label": "PHP Operators",
+        "route": "PHP/operators"
+      },
+      {
         "label": "PHP Basics",
         "route": "PHP/php-basics"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "Resilience",
+    "children": [
+      {
+        "label": "Error Handling & Resilience",
+        "route": "Resilience/error-handling-and-resilience"
       }
     ],
     "expanded": false

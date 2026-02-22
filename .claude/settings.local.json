@@ -16,7 +16,8 @@
       "Bash(git rm:*)",
       "Bash(npx ng build:*)",
       "Bash(npm ls:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(ffmpeg:*)"
     ]
   }
 }
