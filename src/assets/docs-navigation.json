@@ -27,6 +27,18 @@
       {
         "label": "Concurrency & Parallelism",
         "route": "Concurrency/concurrency-and-parallelism"
+      },
+      {
+        "label": "PHP vs Java — Concurrency Comparison",
+        "route": "Concurrency/concurrency-comparison"
+      },
+      {
+        "label": "Java Concurrency",
+        "route": "Concurrency/java-concurrency"
+      },
+      {
+        "label": "PHP Concurrency",
+        "route": "Concurrency/php-concurrency"
       }
     ],
     "expanded": false
@@ -101,12 +113,24 @@
     "label": "PHP",
     "children": [
       {
-        "label": "PHP Arrays",
-        "route": "PHP/arrays"
+        "label": "PHP Basics",
+        "route": "PHP/php-basics"
+      },
+      {
+        "label": "PHP Operators",
+        "route": "PHP/operators"
       },
       {
         "label": "PHP Control Structures",
         "route": "PHP/control-structures"
+      },
+      {
+        "label": "PHP Functions",
+        "route": "PHP/functions"
+      },
+      {
+        "label": "PHP Arrays",
+        "route": "PHP/arrays"
       },
       {
         "label": "PHP Date & Time",
@@ -119,18 +143,6 @@
       {
         "label": "PHP File System",
         "route": "PHP/file-system"
-      },
-      {
-        "label": "PHP Functions",
-        "route": "PHP/functions"
-      },
-      {
-        "label": "PHP Operators",
-        "route": "PHP/operators"
-      },
-      {
-        "label": "PHP Basics",
-        "route": "PHP/php-basics"
       }
     ],
     "expanded": false
