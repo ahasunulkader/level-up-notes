@@ -113,36 +113,42 @@
     "label": "PHP",
     "children": [
       {
-        "label": "PHP Basics",
-        "route": "PHP/php-basics"
-      },
-      {
-        "label": "PHP Operators",
-        "route": "PHP/operators"
-      },
-      {
-        "label": "PHP Control Structures",
-        "route": "PHP/control-structures"
-      },
-      {
-        "label": "PHP Functions",
-        "route": "PHP/functions"
-      },
-      {
-        "label": "PHP Arrays",
-        "route": "PHP/arrays"
-      },
-      {
-        "label": "PHP Date & Time",
-        "route": "PHP/date-and-time"
-      },
-      {
-        "label": "PHP Error Handling",
-        "route": "PHP/error-handling"
-      },
-      {
-        "label": "PHP File System",
-        "route": "PHP/file-system"
+        "label": "Basic",
+        "children": [
+          {
+            "label": "PHP Basics",
+            "route": "PHP/Basic/php-basics"
+          },
+          {
+            "label": "PHP Operators",
+            "route": "PHP/Basic/operators"
+          },
+          {
+            "label": "PHP Control Structures",
+            "route": "PHP/Basic/control-structures"
+          },
+          {
+            "label": "PHP Functions",
+            "route": "PHP/Basic/functions"
+          },
+          {
+            "label": "PHP Arrays",
+            "route": "PHP/Basic/arrays"
+          },
+          {
+            "label": "PHP Date & Time",
+            "route": "PHP/Basic/date-and-time"
+          },
+          {
+            "label": "PHP Error Handling",
+            "route": "PHP/Basic/error-handling"
+          },
+          {
+            "label": "PHP File System",
+            "route": "PHP/Basic/file-system"
+          }
+        ],
+        "expanded": false
       }
     ],
     "expanded": false

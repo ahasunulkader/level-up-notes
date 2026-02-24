@@ -4,7 +4,6 @@
  * Scans src/assets/docs/ folder and auto-generates docs-navigation.json
  *
  * Run: node scripts/generate-docs-nav.js
- * This runs automatically before every build/start via npm scripts.
  */
 
 const fs = require('fs');
@@ -32,12 +31,8 @@ function buildNavTree(dirPath, basePath = '') {
   const items = [];
   const entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
-  // Sort: folders first, then files, both alphabetical
   const folders = entries.filter((e) => e.isDirectory() && !e.name.startsWith('.'));
   const files = entries.filter((e) => e.isFile() && e.name.endsWith('.md'));
-
-  folders.sort((a, b) => a.name.localeCompare(b.name));
-  files.sort((a, b) => a.name.localeCompare(b.name));
 
   for (const folder of folders) {
     const folderPath = path.join(dirPath, folder.name);
