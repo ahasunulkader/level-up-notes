@@ -1,76 +1,42 @@
 [
   {
-    "label": "API Design",
+    "label": "Design Patterns and Principles",
     "children": [
       {
-        "label": "Idempotency & Backward Compatibility",
-        "route": "API-Design/idempotency-and-backward-compatibility"
+        "label": "Patterns",
+        "children": [
+          {
+            "label": "Behavioral Design Patterns in PHP",
+            "route": "Design-Patterns/behavioral-patterns"
+          },
+          {
+            "label": "Creational Design Patterns in PHP",
+            "route": "Design-Patterns/creational-patterns"
+          },
+          {
+            "label": "Structural Design Patterns in PHP",
+            "route": "Design-Patterns/structural-patterns"
+          }
+        ],
+        "expanded": false
       },
       {
-        "label": "REST Principles & HTTP Methods",
-        "route": "API-Design/rest-principles-and-http"
-      },
-      {
-        "label": "HTTP Status Codes & Error Response Design",
-        "route": "API-Design/status-codes-and-error-handling"
-      },
-      {
-        "label": "API Versioning, Pagination & Filtering",
-        "route": "API-Design/versioning-pagination-filtering"
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "Concurrency",
-    "children": [
-      {
-        "label": "Concurrency & Parallelism",
-        "route": "Concurrency/concurrency-and-parallelism"
-      },
-      {
-        "label": "PHP vs Java — Concurrency Comparison",
-        "route": "Concurrency/concurrency-comparison"
-      },
-      {
-        "label": "Java Concurrency",
-        "route": "Concurrency/java-concurrency"
-      },
-      {
-        "label": "PHP Concurrency",
-        "route": "Concurrency/php-concurrency"
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "Data And Persistence",
-    "children": [
-      {
-        "label": "Data & Persistence Concepts",
-        "route": "Data-and-Persistence/data-persistence-concepts"
-      },
-      {
-        "label": "SQL Hands-on Practice",
-        "route": "Data-and-Persistence/sql-practice"
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "Design Patterns",
-    "children": [
-      {
-        "label": "Behavioral Design Patterns in PHP",
-        "route": "Design-Patterns/behavioral-patterns"
-      },
-      {
-        "label": "Creational Design Patterns in PHP",
-        "route": "Design-Patterns/creational-patterns"
-      },
-      {
-        "label": "Structural Design Patterns in PHP",
-        "route": "Design-Patterns/structural-patterns"
+        "label": "Principles",
+        "children": [
+          {
+            "label": "Core OOP Concepts in PHP",
+            "route": "OOP/core-oop-concepts"
+          },
+          {
+            "label": "Practical Design Thinking in PHP",
+            "route": "OOP/practical-design-thinking"
+          },
+          {
+            "label": "SOLID Principles in PHP",
+            "route": "SOLID/solid-principles"
+          }
+        ],
+        "expanded": false
       }
     ],
     "expanded": false
@@ -81,30 +47,6 @@
       {
         "label": "Laravel Essentials",
         "route": "Laravel/laravel-essentials"
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "OOP",
-    "children": [
-      {
-        "label": "Core OOP Concepts in PHP",
-        "route": "OOP/core-oop-concepts"
-      },
-      {
-        "label": "Practical Design Thinking in PHP",
-        "route": "OOP/practical-design-thinking"
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "Performance",
-    "children": [
-      {
-        "label": "Performance & Scalability Thinking",
-        "route": "Performance/performance-and-scalability"
       }
     ],
     "expanded": false
@@ -149,26 +91,56 @@
           }
         ],
         "expanded": false
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "Resilience",
-    "children": [
+      },
       {
-        "label": "Error Handling & Resilience",
-        "route": "Resilience/error-handling-and-resilience"
-      }
-    ],
-    "expanded": false
-  },
-  {
-    "label": "SOLID",
-    "children": [
-      {
-        "label": "SOLID Principles in PHP",
-        "route": "SOLID/solid-principles"
+        "label": "Core PHP",
+        "children": [
+          {
+            "label": "OOP Basics — Introduction, Classes & Objects",
+            "route": "PHP/Core-PHP/oop-basics"
+          },
+          {
+            "label": "Principles of OOP — Abstraction, Encapsulation, Inheritance, Interfaces & Polymorphism",
+            "route": "PHP/Core-PHP/oop-principles"
+          },
+          {
+            "label": "Advanced Objects — Anonymous Classes, Comparing, Cloning & Serialization",
+            "route": "PHP/Core-PHP/advanced-objects"
+          },
+          {
+            "label": "PHP Enums, Traits & Attributes",
+            "route": "PHP/Core-PHP/enums-traits-attributes"
+          },
+          {
+            "label": "PHP Exception Handling",
+            "route": "PHP/Core-PHP/exception-handling"
+          },
+          {
+            "label": "Class Constants, Static Properties & Late Static Binding",
+            "route": "PHP/Core-PHP/static-constants-lsb"
+          },
+          {
+            "label": "PHP Magic Methods",
+            "route": "PHP/Core-PHP/magic-methods"
+          },
+          {
+            "label": "Namespaces, PSR Standards & Autoloading",
+            "route": "PHP/Core-PHP/namespaces-autoloading-psr"
+          },
+          {
+            "label": "PHP Web Fundamentals — Superglobals, Forms, Sessions, Cookies & File Upload",
+            "route": "PHP/Core-PHP/web-fundamentals"
+          },
+          {
+            "label": "PHP MVC Pattern",
+            "route": "PHP/Core-PHP/mvc-pattern"
+          },
+          {
+            "label": "PHP PDO — PHP Data Objects",
+            "route": "PHP/Core-PHP/pdo"
+          }
+        ],
+        "expanded": false
       }
     ],
     "expanded": false
@@ -179,6 +151,84 @@
       {
         "label": "System Design Basics",
         "route": "System-Design/system-design-basics"
+      },
+      {
+        "label": "API Design",
+        "children": [
+          {
+            "label": "Idempotency & Backward Compatibility",
+            "route": "API-Design/idempotency-and-backward-compatibility"
+          },
+          {
+            "label": "REST Principles & HTTP Methods",
+            "route": "API-Design/rest-principles-and-http"
+          },
+          {
+            "label": "HTTP Status Codes & Error Response Design",
+            "route": "API-Design/status-codes-and-error-handling"
+          },
+          {
+            "label": "API Versioning, Pagination & Filtering",
+            "route": "API-Design/versioning-pagination-filtering"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Concurrency",
+        "children": [
+          {
+            "label": "Concurrency & Parallelism",
+            "route": "Concurrency/concurrency-and-parallelism"
+          },
+          {
+            "label": "PHP vs Java — Concurrency Comparison",
+            "route": "Concurrency/concurrency-comparison"
+          },
+          {
+            "label": "Java Concurrency",
+            "route": "Concurrency/java-concurrency"
+          },
+          {
+            "label": "PHP Concurrency",
+            "route": "Concurrency/php-concurrency"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Data And Persistence",
+        "children": [
+          {
+            "label": "Data & Persistence Concepts",
+            "route": "Data-and-Persistence/data-persistence-concepts"
+          },
+          {
+            "label": "SQL Hands-on Practice",
+            "route": "Data-and-Persistence/sql-practice"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Performance",
+        "children": [
+          {
+            "label": "Performance & Scalability Thinking",
+            "route": "Performance/performance-and-scalability"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Resilience",
+        "children": [
+          {
+            "label": "Error Handling & Resilience",
+            "route": "Resilience/error-handling-and-resilience"
+          }
+        ],
+        "expanded": false
       }
     ],
     "expanded": false

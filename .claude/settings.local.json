@@ -17,7 +17,8 @@
       "Bash(npx ng build:*)",
       "Bash(npm ls:*)",
       "Bash(grep:*)",
-      "Bash(ffmpeg:*)"
+      "Bash(ffmpeg:*)",
+      "Bash(ls -la \"d:\\\\Learn\\\\level-up-notes\\\\src\\\\app\\\\shared\\\\components\\\\sidebar\"\" 2>/dev/null || echo \"Directory checked \")"
     ]
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal, HostListener, OnInit, DOCUMENT } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NavigationService } from '../../../core/services/navigation.service';
@@ -9,7 +9,7 @@ import { NavigationItem } from '../../../core/models/navigation.model';
   standalone: true,
   imports: [RouterLink, RouterLinkActive, NgTemplateOutlet],
   template: `
-    <aside class="sidebar">
+    <aside class="sidebar" [style.width.px]="sidebarWidth()">
       <nav class="sidebar-nav">
         @for (item of navService.navigation(); track item.label) {
           <ng-container
@@ -18,6 +18,7 @@ import { NavigationItem } from '../../../core/models/navigation.model';
           ></ng-container>
         }
       </nav>
+      <div class="resize-handle" (mousedown)="onResizeStart($event)"></div>
     </aside>
 
     <ng-template #navItem let-item let-depth="depth">
@@ -60,14 +61,17 @@ import { NavigationItem } from '../../../core/models/navigation.model';
   styles: [`
     .sidebar {
       width: 280px;
-      min-width: 280px;
+      min-width: 180px;
+      max-width: 600px;
       background: #1e293b;
       border-right: 1px solid #334155;
       height: calc(100vh - 60px);
       overflow-y: auto;
+      overflow-x: hidden;
       position: fixed;
       top: 60px;
       padding: 12px 0;
+      box-sizing: border-box;
     }
     .sidebar::-webkit-scrollbar {
       width: 4px;
@@ -78,6 +82,20 @@ import { NavigationItem } from '../../../core/models/navigation.model';
     .sidebar::-webkit-scrollbar-thumb {
       background: #334155;
       border-radius: 4px;
+    }
+    .resize-handle {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5px;
+      height: 100%;
+      cursor: col-resize;
+      background: transparent;
+      z-index: 10;
+      transition: background 0.15s;
+    }
+    .resize-handle:hover {
+      background: rgba(96, 165, 250, 0.35);
     }
     .nav-folder-btn {
       display: flex;
@@ -106,12 +124,16 @@ import { NavigationItem } from '../../../core/models/navigation.model';
     .folder-label {
       flex: 1;
       font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .chevron {
       font-size: 10px;
       color: #64748b;
       transition: transform 0.2s;
       transform: rotate(90deg);
+      flex-shrink: 0;
     }
     .chevron.rotated {
       transform: rotate(180deg);
@@ -158,9 +180,48 @@ import { NavigationItem } from '../../../core/models/navigation.model';
       :host(.mobile-open) .sidebar {
         left: 0;
       }
+      .resize-handle {
+        display: none;
+      }
     }
   `],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   navService = inject(NavigationService);
+  private doc = inject(DOCUMENT);
+
+  sidebarWidth = signal(280);
+  private isResizing = false;
+  private startX = 0;
+  private startWidth = 280;
+
+  ngOnInit(): void {
+    this.doc.documentElement.style.setProperty('--sidebar-width', '280px');
+  }
+
+  onResizeStart(event: MouseEvent): void {
+    this.isResizing = true;
+    this.startX = event.clientX;
+    this.startWidth = this.sidebarWidth();
+    this.doc.body.style.userSelect = 'none';
+    this.doc.body.style.cursor = 'col-resize';
+    event.preventDefault();
+  }
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(event: MouseEvent): void {
+    if (!this.isResizing) return;
+    const delta = event.clientX - this.startX;
+    const newWidth = Math.max(180, Math.min(600, this.startWidth + delta));
+    this.sidebarWidth.set(newWidth);
+    this.doc.documentElement.style.setProperty('--sidebar-width', newWidth + 'px');
+  }
+
+  @HostListener('document:mouseup')
+  onMouseUp(): void {
+    if (!this.isResizing) return;
+    this.isResizing = false;
+    this.doc.body.style.userSelect = '';
+    this.doc.body.style.cursor = '';
+  }
 }
