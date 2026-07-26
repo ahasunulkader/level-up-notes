@@ -1,5 +1,131 @@
 [
   {
+    "label": "Resume Interview Prep",
+    "children": [
+      {
+        "label": "Overview",
+        "route": "Resume/00-overview"
+      },
+      {
+        "label": "Senior SE II (Current)",
+        "children": [
+          {
+            "label": "Docker & Kubernetes Containerization",
+            "route": "Resume/01-containerization-docker-kubernetes"
+          },
+          {
+            "label": "Observability — Logging, Tracing, Metrics",
+            "route": "Resume/02-observability-logging-tracing-metrics"
+          },
+          {
+            "label": "AI-Assisted Tools & OWASP Secure Coding",
+            "route": "Resume/03-ai-tools-owasp-security"
+          },
+          {
+            "label": "Redis Caching",
+            "route": "Resume/04-redis-caching"
+          },
+          {
+            "label": "Mentoring & Code Reviews",
+            "route": "Resume/05-mentoring-code-reviews"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Senior SE I",
+        "children": [
+          {
+            "label": "JasperSoft Dynamic Reports & Team Rollout",
+            "route": "Resume/06-jaspersoft-dynamic-reports"
+          },
+          {
+            "label": "Concurrent Java API Scheduler",
+            "route": "Resume/07-concurrent-api-scheduler"
+          },
+          {
+            "label": "Kafka Event-Driven Pipelines",
+            "route": "Resume/08-kafka-event-driven-pipelines"
+          },
+          {
+            "label": "CI/CD with Jenkins & JUnit",
+            "route": "Resume/09-cicd-jenkins-junit"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Software Engineer II",
+        "children": [
+          {
+            "label": "SQL Schema Automation from Hibernate",
+            "route": "Resume/10-sql-schema-automation-hibernate"
+          },
+          {
+            "label": "Real-Time WebSocket Notifications",
+            "route": "Resume/11-websocket-notifications"
+          },
+          {
+            "label": "Tree Traversal — 150K Hierarchical Records",
+            "route": "Resume/12-tree-traversal-hierarchical-data"
+          },
+          {
+            "label": "DB Performance Tuning",
+            "route": "Resume/13-db-performance-tuning"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Software Engineer I",
+        "children": [
+          {
+            "label": "AngularJS to Angular 16 Migration",
+            "route": "Resume/14-angular-migration"
+          },
+          {
+            "label": "Java Multithreading for 3M+ Records",
+            "route": "Resume/15-java-multithreading-large-datasets"
+          },
+          {
+            "label": "Concurrent Indexing for Multimedia Metadata",
+            "route": "Resume/16-concurrent-indexing-metadata"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Projects",
+        "children": [
+          {
+            "label": "BDTicker — Real-Time BD Stock Dashboard",
+            "route": "Resume/17-project-bdticker"
+          },
+          {
+            "label": "Eventamo — Service Marketplace",
+            "route": "Resume/18-project-eventamo"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Skills & Behavioral",
+        "children": [
+          {
+            "label": "Skills Deep Dive — Why This Tech, Not That",
+            "route": "Resume/19-skills-tech-choices-deep-dive"
+          },
+          {
+            "label": "Achievements & Behavioral",
+            "route": "Resume/20-achievements-behavioral"
+          }
+        ],
+        "expanded": false
+      }
+    ],
+    "expanded": false
+  },
+  {
     "label": "Design Patterns and Principles",
     "children": [
       {
@@ -34,9 +160,55 @@
           {
             "label": "SOLID Principles in PHP",
             "route": "SOLID/solid-principles"
+          },
+          {
+            "label": "Clean Code and Maintainability",
+            "route": "Clean-Code/clean-code"
           }
         ],
         "expanded": false
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "Testing",
+    "children": [
+      {
+        "label": "Testing Concepts (Framework-Agnostic)",
+        "route": "Testing/testing-concepts"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "DevOps",
+    "children": [
+      {
+        "label": "DevOps and Environment Awareness",
+        "route": "DevOps/devops-concepts"
+      },
+      {
+        "label": "Git & Collaborative Workflows",
+        "route": "DevOps/git-collaborative-workflows"
+      },
+      {
+        "label": "Cloud Platforms (AWS, GCP, Azure) & Docker",
+        "route": "DevOps/cloud-platforms-and-docker"
+      },
+      {
+        "label": "CI/CD, Testing, Caching & Message Queues",
+        "route": "DevOps/cicd-testing-caching-queues"
+      }
+    ],
+    "expanded": false
+  },
+  {
+    "label": "Security",
+    "children": [
+      {
+        "label": "Security Fundamentals",
+        "route": "Security/security-fundamentals"
       }
     ],
     "expanded": false
@@ -88,6 +260,60 @@
           {
             "label": "PHP File System",
             "route": "PHP/Basic/file-system"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Advanced PHP",
+        "children": [
+          {
+            "label": "PHP Generators",
+            "route": "PHP/Advanced/generators"
+          },
+          {
+            "label": "Covariance & Contravariance",
+            "route": "PHP/Advanced/covariance-contravariance"
+          },
+          {
+            "label": "Composition vs Inheritance",
+            "route": "PHP/Advanced/composition-vs-inheritance"
+          },
+          {
+            "label": "Docker & PHP Application Setup",
+            "route": "PHP/Advanced/docker-php"
+          },
+          {
+            "label": "PHPUnit — Unit Testing",
+            "route": "PHP/Advanced/phpunit"
+          },
+          {
+            "label": "Dependency Injection & DI Container",
+            "route": "PHP/Advanced/dependency-injection"
+          },
+          {
+            "label": "Sending Emails & Scheduled Jobs",
+            "route": "PHP/Advanced/emails-and-scheduled-jobs"
+          },
+          {
+            "label": "Doctrine — ORM, DBAL, Migrations",
+            "route": "PHP/Advanced/doctrine"
+          },
+          {
+            "label": "PHP cURL & Guzzle",
+            "route": "PHP/Advanced/curl-and-guzzle"
+          },
+          {
+            "label": "PHP Documentor",
+            "route": "PHP/Advanced/php-documentor"
+          },
+          {
+            "label": "Securing PHP Applications",
+            "route": "PHP/Advanced/securing-php"
+          },
+          {
+            "label": "Caching — Opcode & Object Cache",
+            "route": "PHP/Advanced/caching"
           }
         ],
         "expanded": false
@@ -153,6 +379,10 @@
         "route": "System-Design/system-design-basics"
       },
       {
+        "label": "Geospatial Indexing — Quadtrees & Geohashing",
+        "route": "System-Design/geo-spatial-indexing"
+      },
+      {
         "label": "API Design",
         "children": [
           {
@@ -204,8 +434,16 @@
             "route": "Data-and-Persistence/data-persistence-concepts"
           },
           {
+            "label": "Database Types — SQL, NoSQL, Graph & Beyond",
+            "route": "Data-and-Persistence/database-types"
+          },
+          {
             "label": "SQL Hands-on Practice",
             "route": "Data-and-Persistence/sql-practice"
+          },
+          {
+            "label": "Advanced SQL & DB Programmability (Java & PHP)",
+            "route": "Data-and-Persistence/advanced-sql-programmability"
           }
         ],
         "expanded": false
@@ -226,6 +464,36 @@
           {
             "label": "Error Handling & Resilience",
             "route": "Resilience/error-handling-and-resilience"
+          }
+        ],
+        "expanded": false
+      },
+      {
+        "label": "Practice Problems",
+        "children": [
+          {
+            "label": "URL Shortener (Bit.ly)",
+            "route": "System-Design/Practice-Problems/url-shortener-bitly"
+          },
+          {
+            "label": "Uber (Ride-Hailing)",
+            "route": "System-Design/Practice-Problems/uber-system-design"
+          },
+          {
+            "label": "Digital Wallet — HLD (GrabPay / PayPal)",
+            "route": "System-Design/Practice-Problems/digital-wallet-hld"
+          },
+          {
+            "label": "Digital Wallet — LLD (GrabPay / PayPal)",
+            "route": "System-Design/Practice-Problems/digital-wallet-lld"
+          },
+          {
+            "label": "Ticket Booking — HLD (Quantity-Based)",
+            "route": "System-Design/Practice-Problems/HLD/ticket-booking-hld"
+          },
+          {
+            "label": "Ticket Booking — LLD (Quantity-Based)",
+            "route": "System-Design/Practice-Problems/LLD/ticket-booking-lld"
           }
         ],
         "expanded": false

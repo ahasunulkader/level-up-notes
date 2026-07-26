@@ -82,6 +82,74 @@ CREATE TABLE orders (
 
 > **Interview tip:** "It depends" is the right start. Discuss the specific trade-offs for the scenario at hand. A banking system needs ACID. A social media feed cache needs speed. A product catalog could use either.
 
+### MySQL vs PostgreSQL — Which One and Why
+
+"Relational" isn't a single decision — in practice the real question is almost always MySQL vs PostgreSQL, since both are free, open-source, and battle-tested at scale.
+
+| Factor | MySQL | PostgreSQL |
+|---|---|---|
+| Query features | Solid, but fewer advanced features | Window functions, CTEs (incl. recursive), full JSON/JSONB, arrays, custom types |
+| Indexing | B-Tree, Hash, full-text | B-Tree, Hash, **GIN, GiST, BRIN** — better for JSON, full-text, geospatial |
+| Standards compliance | Looser interpretation of SQL standard | Closest to full SQL-standard compliance of any open-source DB |
+| Concurrency model | Row-level locking (InnoDB) | MVCC — readers never block writers, generally better under mixed read/write load |
+| Write throughput (simple writes) | Slightly faster for simple, high-volume inserts | Slightly more overhead per write due to MVCC bookkeeping |
+| Replication / ops simplicity | Simpler to set up, huge ecosystem (WordPress, Laravel default) | Slightly more to learn, but very stable (streaming replication, logical replication) |
+| Extensibility | Limited | Extensions: PostGIS (geo), TimescaleDB (time-series), pg_trgm (fuzzy search) |
+
+**Choose MySQL when:**
+- The workload is read-heavy, the schema is simple, and you want the path of least resistance (LAMP/LEMP stacks, most PHP frameworks default to it)
+- Your team already knows it well and the app doesn't need advanced SQL features
+- You want the largest hosting/tooling ecosystem for a "boring, proven" choice
+
+**Choose PostgreSQL when:**
+- You need complex queries, analytics, window functions, or recursive CTEs
+- You want structured *and* semi-structured data in one place (JSONB alongside real columns)
+- You need advanced indexing (partial indexes, GIN for JSON/array/full-text, geospatial via PostGIS)
+- Mixed read/write concurrency matters — MVCC means long-running reports don't block writers
+
+**Other SQL options, briefly:**
+- **SQLite** — not a client/server DB at all; the whole database is one file with no server process. Right call for mobile apps, embedded systems, and local dev/test — wrong call for anything with concurrent writers.
+- **SQL Server** — the right choice when you're already deep in the .NET/Azure ecosystem and want first-class tooling (SSMS) and BI integration; licensing cost and Windows-centric history are the trade-off.
+- **MariaDB** — a MySQL fork with a nearly identical decision calculus to MySQL, plus a few extra storage engines; mostly relevant if you specifically need a fully community-governed (non-Oracle-owned) alternative.
+
+> **Best 3 SQL databases to know cold** (each solves a genuinely different problem, not just "better/worse" than each other):
+> 1. **PostgreSQL** — the strongest general-purpose default for new projects: most features, best standards compliance, handles both relational and JSON workloads well.
+> 2. **MySQL** — the safe, proven choice for simple, read-heavy, high-traffic web apps; unmatched ecosystem and hosting support.
+> 3. **SQLite** — the correct choice whenever there's no server to run at all: mobile apps, embedded devices, CLI tools, and test suites.
+
+### Choosing Among NoSQL Types
+
+"NoSQL" is not one technology — it's four different data models that happen to share the "not strictly relational" label. The real decision is two steps: **first pick the category that matches your access pattern, then pick a product within it.**
+
+| Your access pattern | Category | Pick |
+|---|---|---|
+| Nested/variable JSON documents, queried many ways | Document | MongoDB (self-managed/flexible) or DynamoDB (AWS-native, serverless) |
+| Simple key → value, need sub-millisecond reads | Key-Value | Redis (rich data structures) or Memcached (pure cache, simpler) |
+| Massive write throughput, must never go down | Wide-Column | Cassandra (self-managed/multi-cloud) or Bigtable (GCP-native) |
+| Deep relationship traversal (friends-of-friends, fraud rings) | Graph | Neo4j |
+| Time-stamped metrics/events at high ingest rate | Time-Series | TimescaleDB (already on Postgres) or InfluxDB (dedicated) |
+
+**MongoDB vs DynamoDB** (the most common document-store fork in the road):
+- MongoDB when you want a rich query language (aggregation pipeline, ad-hoc filters) and you're not locked into AWS
+- DynamoDB when you're AWS-native, want zero operational overhead, and can design your access patterns up front — ad-hoc queries are expensive/awkward
+
+**Redis vs Memcached** (the key-value fork in the road):
+- Redis when you need more than a cache: pub/sub, sorted sets (leaderboards), atomic counters, TTL-based sessions, persistence
+- Memcached when you need *only* a pure, simple, multi-threaded cache and nothing else
+
+**Cassandra vs DynamoDB vs Bigtable** (the "must scale writes globally" fork in the road):
+- Cassandra when you're self-managed or multi-cloud and need masterless, always-available writes
+- DynamoDB when you're AWS-native and want the operational burden gone entirely
+- Bigtable when you're GCP-native (this is literally what powers Google Search/Maps under the hood)
+
+**Choose Neo4j specifically when:**
+- The query itself is a traversal ("friends of friends", "shortest path", "circular payment ring") — this is painful in SQL past 2-3 joins and natural in a graph model
+
+> **Best 3 NoSQL databases to know cold** (chosen to cover the three access patterns you'll actually hit in real systems, not a ranking of "better"):
+> 1. **Redis** — the universal companion database; almost every backend stack ends up using it for caching, sessions, rate limiting, or pub/sub regardless of what the primary DB is.
+> 2. **MongoDB** — the most common general-purpose document store outside of AWS; the default answer when "the schema is too variable for SQL."
+> 3. **Cassandra** (or **DynamoDB** if the stack is AWS-native) — the answer when write throughput or global availability is the bottleneck a single relational primary can't solve.
+
 ---
 
 ## 2. ACID Properties

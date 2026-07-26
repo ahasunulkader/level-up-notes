@@ -119,7 +119,7 @@ export class DocViewerComponent implements OnInit, OnDestroy {
     const href = anchor.getAttribute('href');
     if (!href) return;
 
-    if (href.startsWith('http')) {
+    if (href.startsWith('http') || href.endsWith('.html')) {
       event.preventDefault();
       window.open(href, '_blank');
       return;

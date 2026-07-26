@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Geospatial Indexing — Interactive Guide</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; }
+
+    header {
+      background: #1e293b; border-bottom: 1px solid #334155;
+      padding: 13px 24px; display: flex; align-items: center; gap: 12px;
+    }
+    header h1 { font-size: 18px; color: #f8fafc; }
+    .badge { background: #3b82f6; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+    .hint { color: #475569; font-size: 12px; margin-left: auto; }
+
+    .tabs { display: flex; background: #1e293b; border-bottom: 1px solid #334155; padding: 0 24px; }
+    .tab-btn { padding: 11px 20px; background: none; border: none; color: #64748b; cursor: pointer; font-size: 14px; border-bottom: 2px solid transparent; transition: all 0.15s; }
+    .tab-btn:hover { color: #e2e8f0; }
+    .tab-btn.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+
+    .tab-content { display: none; height: calc(100vh - 107px); }
+    .tab-content.active { display: flex; }
+
+    /* PANEL */
+    .panel { width: 300px; flex-shrink: 0; background: #1e293b; border-right: 1px solid #334155; padding: 20px; overflow-y: auto; }
+    .panel h2 { font-size: 15px; color: #f1f5f9; margin-bottom: 12px; }
+    .panel h3 { font-size: 11px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin: 16px 0 7px; }
+    .panel p { font-size: 13px; color: #cbd5e1; line-height: 1.65; margin-bottom: 8px; }
+    .box { background: #0f172a; border: 1px solid #334155; border-radius: 7px; padding: 11px 13px; margin: 8px 0; font-size: 12px; color: #cbd5e1; line-height: 1.75; }
+    .box.blue  { border-color: #3b82f6; }
+    .box.green { border-color: #22c55e; }
+    .box.amber { border-color: #f59e0b; }
+    .box strong { display: block; color: #f1f5f9; margin-bottom: 2px; font-size: 12px; }
+    code { font-family: monospace; color: #22d3ee; font-size: 12px; }
+
+    /* DEMO AREA */
+    .demo { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; gap: 14px; overflow: hidden; }
+    canvas { border: 1px solid #334155; border-radius: 8px; display: block; }
+
+    .controls { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
+    .btn { padding: 7px 16px; border-radius: 6px; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; cursor: pointer; font-size: 13px; }
+    .btn:hover { background: #334155; }
+    .btn.primary { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+    .btn.primary:hover { background: #2563eb; }
+
+    .hash-display { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 10px 22px; text-align: center; font-family: monospace; }
+    .hash-display .lbl { font-size: 11px; color: #64748b; }
+    .hash-display .val { color: #22d3ee; font-size: 22px; letter-spacing: 5px; margin: 3px 0; min-height: 32px; }
+    .hash-display .sz  { font-size: 12px; color: #64748b; }
+
+    /* STATS */
+    .stats-row { display: flex; gap: 20px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 9px 18px; }
+    .stat .v { font-size: 22px; font-weight: 700; color: #22c55e; line-height: 1; text-align: center; }
+    .stat .k { font-size: 11px; color: #64748b; text-align: center; margin-top: 2px; }
+
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; font-size: 12px; color: #94a3b8; }
+    .legend-item { display: flex; align-items: center; gap: 5px; }
+    .ld { width: 12px; height: 12px; border-radius: 3px; }
+
+    /* COMPARISON */
+    .cmp-wrap { flex: 1; overflow-y: auto; padding: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: start; }
+    .card { background: #1e293b; border: 1px solid #334155; border-radius: 11px; padding: 18px; }
+    .card h2 { font-size: 15px; margin-bottom: 12px; }
+    .card.geo h2  { color: #22d3ee; }
+    .card.quad h2 { color: #22c55e; }
+    .ci { display: flex; gap: 8px; margin: 8px 0; font-size: 13px; color: #cbd5e1; line-height: 1.5; }
+    .full { grid-column: 1/-1; }
+    table.dt { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+    table.dt th { background: #0f172a; padding: 8px 12px; text-align: left; color: #64748b; }
+    table.dt td { padding: 8px 12px; border-bottom: 1px solid #1e293b; color: #cbd5e1; }
+    table.dt tr:last-child td { border-bottom: none; }
+    .yes { color: #22c55e; font-weight: 700; }
+    .no  { color: #f87171; }
+    .fg { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
+    .cb { background: #0f172a; border: 1px solid #334155; border-radius: 7px; padding: 12px; font-family: monospace; font-size: 12px; color: #e2e8f0; line-height: 2; }
+    .cb .cm { color: #64748b; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Geospatial Indexing</h1>
+  <span class="badge">System Design</span>
+  <span class="hint">Click to interact</span>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" onclick="switchTab('geohash',this)">🌐 Geohashing</button>
+  <button class="tab-btn"        onclick="switchTab('quadtree',this)">🌲 Quadtree</button>
+  <button class="tab-btn"        onclick="switchTab('compare',this)">⚖️ Comparison</button>
+</nav>
+
+<!-- ═══════════════════════════ GEOHASH ═══════════════════════════ -->
+<div id="tab-geohash" class="tab-content active">
+  <div class="panel">
+    <h2>🌐 Geohashing</h2>
+    <p>Divides the world into a <strong>fixed grid</strong>. Each cell gets a short string. Longer string = smaller (more precise) area.</p>
+
+    <h3>How Layers Work</h3>
+    <p>Layer 1 splits the world into 4 cells: <code>0 1 2 3</code>. Each cell then splits again into 4 more, giving Layer 2 cells like <code>20 21 22 23</code>. The prefix encodes which region you're in.</p>
+
+    <div class="box blue">
+      <strong>Key Rule</strong>
+      All Layer-2 cells inside cell <code>2</code> start with <code>2</code>:<br>
+      → <code>20, 21, 22, 23</code><br>
+      This is how prefix search works in the DB!
+    </div>
+
+    <h3>Precision Levels</h3>
+    <div class="box">
+      1 char  → huge area (continent)<br>
+      2 chars → large area (country)<br>
+      5 chars → ~4.9 km neighborhood ★<br>
+      6 chars → ~1.2 km street ★<br>
+      9 chars → ~4.8 m person
+    </div>
+
+    <h3>The Edge Problem</h3>
+    <div class="box amber">
+      <strong>⚠️ Boundary Issue</strong>
+      Cell <code>2</code> and cell <code>3</code> are neighbours, but their sub-cells (<code>23</code> vs <code>30</code>) have <em>very different</em> prefixes — even if they are centimetres apart. Always check <strong>8 neighbours</strong>!
+    </div>
+
+    <h3>DB Search Pattern</h3>
+    <div class="box">
+      1. Geohash user location (pick precision)<br>
+      2. Get 8 neighbour cells<br>
+      3. <code>WHERE geohash IN (...9 cells...)</code><br>
+      4. Filter by actual distance (Haversine)<br>
+      5. Sort & return top N
+    </div>
+  </div>
+
+  <div class="demo">
+    <div class="hash-display">
+      <div class="lbl">Selected Cell</div>
+      <div class="val" id="gh-val">—</div>
+      <div class="sz" id="gh-sz">Click a Layer-1 cell, then a Layer-2 cell</div>
+    </div>
+    <canvas id="geohash-canvas" width="660" height="290" style="cursor:pointer"></canvas>
+    <div class="controls">
+      <button class="btn primary" onclick="resetGeohash()">Reset</button>
+      <span style="font-size:12px;color:#475569">Left-click L1 cell → highlight L2 region &nbsp;|&nbsp; Click L2 cell → see full hash</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ QUADTREE ═══════════════════════════ -->
+<div id="tab-quadtree" class="tab-content">
+  <div class="panel">
+    <h2>🌲 Quadtree</h2>
+    <p>Each node has <strong>4 children</strong>: NW, NE, SW, SE. Cells split only when they get too crowded — the grid <em>adapts to data density</em>.</p>
+
+    <h3>k = 5 (Threshold)</h3>
+    <p>When a cell reaches <strong>5 points</strong>, it splits into 4 quadrants and redistributes. Keep splitting until every cell has ≤ 5 points.</p>
+
+    <div class="box green">
+      <strong>Adaptive Grid</strong>
+      Dense area (city centre) → many small, deep cells<br>
+      Sparse area (countryside) → one large shallow cell<br>
+      Compare with geohash: the grid sizes are <em>fixed</em> regardless of data.
+    </div>
+
+    <h3>Tree Structure</h3>
+    <div class="box">
+      ○ = internal node (split into 4)<br>
+      ● = leaf node (holds actual points)<br><br>
+      Leaf nodes are at different depths — dense areas are deeper in the tree.
+    </div>
+
+    <h3>Nearby Search</h3>
+    <div class="box">
+      1. Walk tree → find leaf for query point<br>
+      2. Return all points in that leaf<br>
+      3. Not enough? → expand to parent/siblings<br>
+      4. Filter by actual distance & return top N
+    </div>
+
+    <h3>Live Stats</h3>
+    <div class="stats-row">
+      <div class="stat"><div class="v" id="qt-pts">0</div><div class="k">Points</div></div>
+      <div class="stat"><div class="v" id="qt-cells">1</div><div class="k">Cells</div></div>
+      <div class="stat"><div class="v" id="qt-depth">0</div><div class="k">Max Depth</div></div>
+    </div>
+  </div>
+
+  <div class="demo" style="flex-direction:row; justify-content:center; align-items:center; gap:20px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <canvas id="quadtree-canvas" width="370" height="370" style="cursor:crosshair"></canvas>
+      <div class="controls">
+        <button class="btn primary" onclick="resetQuadtree()">Clear All</button>
+        <span style="font-size:12px;color:#475569">Click to add points (k=5)</span>
+      </div>
+      <div class="legend">
+        <div class="legend-item"><div class="ld" style="background:#1e3a8a"></div>depth 0</div>
+        <div class="legend-item"><div class="ld" style="background:#1d4ed8"></div>depth 1</div>
+        <div class="legend-item"><div class="ld" style="background:#3b82f6"></div>depth 2</div>
+        <div class="legend-item"><div class="ld" style="background:#93c5fd"></div>depth 3+</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <span style="font-size:12px;color:#64748b;font-family:monospace;">Tree Structure</span>
+      <canvas id="tree-canvas" width="230" height="370" style="cursor:default;background:#0f172a;border-color:#1e293b;"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ COMPARISON ═══════════════════════════ -->
+<div id="tab-compare" class="tab-content" style="display:none;">
+  <div class="cmp-wrap">
+
+    <div class="card geo">
+      <h2>🌐 Geohashing</h2>
+      <div class="ci"><span>✅</span><div>Works in any DB — simple prefix query (<code>LIKE 'abc%'</code>)</div></div>
+      <div class="ci"><span>✅</span><div>Stateless — just a string column, no special data structure</div></div>
+      <div class="ci"><span>✅</span><div>Easy to shard: prefix → shard key</div></div>
+      <div class="ci"><span>✅</span><div>Highly cacheable — same prefix = same data every time</div></div>
+      <div class="ci"><span>✅</span><div>Great for static data (restaurants, POIs)</div></div>
+      <div class="ci"><span>❌</span><div>Fixed grid — wastes cells in sparse areas</div></div>
+      <div class="ci"><span>❌</span><div>Edge problem — close points can have completely different prefixes</div></div>
+      <div class="ci"><span>❌</span><div>Cell shapes distort near the poles</div></div>
+    </div>
+
+    <div class="card quad">
+      <h2>🌲 Quadtree</h2>
+      <div class="ci"><span>✅</span><div>Adaptive — splits only where data is dense</div></div>
+      <div class="ci"><span>✅</span><div>Cells are always rectangular, no distortion near poles</div></div>
+      <div class="ci"><span>✅</span><div>Natural for range queries and spatial joins</div></div>
+      <div class="ci"><span>✅</span><div>Ideal for real-time moving objects (Uber drivers)</div></div>
+      <div class="ci"><span>❌</span><div>Needs in-memory tree or special DB (PostGIS, R-tree)</div></div>
+      <div class="ci"><span>❌</span><div>Hard to shard across servers</div></div>
+      <div class="ci"><span>❌</span><div>Must re-balance when data changes</div></div>
+    </div>
+
+    <div class="card full">
+      <h2 style="color:#f59e0b">📋 When to Use Which</h2>
+      <table class="dt">
+        <thead><tr><th>Scenario</th><th>Best Choice</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>Yelp / Google Maps — nearby restaurants</td><td class="yes">Geohash</td><td>Static data, DB prefix query, easily cached</td></tr>
+          <tr><td>Tinder — nearby users</td><td class="yes">Geohash</td><td>Store in user table, prefix search, cacheable</td></tr>
+          <tr><td>Uber / Lyft — nearby drivers (moving)</td><td class="yes">Quadtree</td><td>Real-time updates, adapts to city density, in-memory</td></tr>
+          <tr><td>Game collision detection</td><td class="yes">Quadtree</td><td>In-memory, fast, adapts to object clustering</td></tr>
+          <tr><td>Multi-server distributed system</td><td class="yes">Geohash</td><td>Prefix → shard key, no cross-server coordination</td></tr>
+          <tr><td>Very uneven data distribution</td><td class="yes">Quadtree</td><td>No wasted cells in empty regions</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card full">
+      <h2 style="color:#f59e0b">📐 Distance Calculation</h2>
+      <div class="fg">
+        <div>
+          <p style="font-size:13px;color:#94a3b8;margin-bottom:7px"><strong style="color:#f1f5f9">Haversine</strong> — accurate, works for large distances</p>
+          <div class="cb">a = sin²(Δlat/2) + cos(lat1)·cos(lat2)·sin²(Δlon/2)<br>c = 2·atan2(√a, √(1−a))<br>d = R·c &nbsp;<span class="cm">// R = 6,371 km</span></div>
+        </div>
+        <div>
+          <p style="font-size:13px;color:#94a3b8;margin-bottom:7px"><strong style="color:#f1f5f9">Simplified Euclidean</strong> — good enough for &lt;100 km</p>
+          <div class="cb">Δlat_km = (lat2−lat1) × 111<br>Δlon_km = (lon2−lon1) × 111·cos(lat)<br>d = √(Δlat² + Δlon²)</div>
+          <p style="font-size:12px;color:#64748b;margin-top:7px">Say "Haversine" in the interview, then use this simpler form to explain it.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────────────────
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => { el.classList.remove('active'); el.style.display = 'none'; });
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const tab = document.getElementById('tab-' + name);
+  tab.style.display = (name === 'compare') ? 'block' : 'flex';
+  tab.classList.add('active');
+  btn.classList.add('active');
+  if (name === 'geohash') drawGeohash();
+  if (name === 'quadtree') { drawQuadtree(); drawTree(); }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// GEOHASH — Layer 1 (2×2) and Layer 2 (4×4) side by side
+// ─────────────────────────────────────────────────────────────────
+// L2 cell label at grid position (row, col) in the 4×4 grid:
+// first digit  = which L1 quadrant  (0=TL, 1=TR, 2=BL, 3=BR)
+// second digit = position within that 2×2 quadrant
+function l2Label(row, col) {
+  const first  = (row < 2 ? 0 : 2) + (col < 2 ? 0 : 1);
+  const second = (row % 2) * 2 + (col % 2);
+  return `${first}${second}`;
+}
+// Which L1 cell owns this L2 position?
+function l2Owner(row, col) { return (row < 2 ? 0 : 2) + (col < 2 ? 0 : 1); }
+// L1 cell [0-3] → its 2×2 bounding rows/cols in L2
+function l1ToL2Region(cell) {
+  return { r: cell >= 2 ? 2 : 0, c: (cell === 1 || cell === 3) ? 2 : 0 };
+}
+
+let ghL1Selected = null;  // 0-3 or null
+let ghL2Selected = null;  // "20" etc. or null
+
+const L1_LABELS = ['0','1','2','3'];
+// L1 layout: 2×2
+// positions: 0=TL, 1=TR, 2=BL, 3=BR
+function l1Pos(cell, x, y, size) {
+  const col = cell % 2, row = Math.floor(cell / 2);
+  return { x: x + col * size/2, y: y + row * size/2, w: size/2, h: size/2 };
+}
+
+function drawGeohash() {
+  const cv = document.getElementById('geohash-canvas');
+  const ctx = cv.getContext('2d');
+  const W = cv.width, H = cv.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(0, 0, W, H);
+
+  // ── Layer 1 (2×2 grid) ──
+  const L1 = { x: 50, y: 60, size: 180 };
+  for (let cell = 0; cell < 4; cell++) {
+    const { x, y, w, h } = l1Pos(cell, L1.x, L1.y, L1.size);
+    const isSelected = ghL1Selected === cell;
+    ctx.fillStyle = isSelected ? '#1e3a5f' : (cell % 2 === Math.floor(cell/2) % 2 ? '#15203a' : '#1a2744');
+    ctx.fillRect(x, y, w, h);
+    ctx.strokeStyle = isSelected ? '#3b82f6' : '#334155';
+    ctx.lineWidth = isSelected ? 2 : 1;
+    ctx.strokeRect(x + 1, y + 1, w - 2, h - 2);
+    // Label
+    ctx.font = 'bold 36px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = isSelected ? '#60a5fa' : '#475569';
+    ctx.fillText(L1_LABELS[cell], x + w/2, y + h/2);
+  }
+  // "layer 1" label
+  ctx.fillStyle = '#64748b'; ctx.font = '13px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('layer 1', L1.x + L1.size/2, L1.y + L1.size + 10);
+
+  // ── Layer 2 (4×4 grid) ──
+  const L2 = { x: 330, y: 20, size: 280 };
+  const cw = L2.size / 4, ch = L2.size / 4;
+  for (let row = 0; row < 4; row++) {
+    for (let col = 0; col < 4; col++) {
+      const lbl   = l2Label(row, col);
+      const owner = l2Owner(row, col);
+      const x = L2.x + col * cw, y = L2.y + row * ch;
+      const isHighlighted = ghL1Selected !== null && owner === ghL1Selected;
+      const isClicked     = lbl === ghL2Selected;
+
+      ctx.fillStyle = isClicked ? '#1e3a5f' : isHighlighted ? '#1a2f4a' : '#111827';
+      ctx.fillRect(x, y, cw, ch);
+      ctx.strokeStyle = isClicked ? '#22d3ee' : isHighlighted ? '#3b82f6' : '#1e293b';
+      ctx.lineWidth = isClicked ? 2 : isHighlighted ? 1.5 : 0.5;
+      ctx.strokeRect(x + 0.5, y + 0.5, cw - 1, ch - 1);
+      ctx.fillStyle = isClicked ? '#22d3ee' : isHighlighted ? '#60a5fa' : '#334155';
+      ctx.font = `bold ${Math.round(cw * 0.28)}px monospace`;
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(lbl, x + cw/2, y + ch/2);
+    }
+  }
+  // Draw red outline box around selected L1's L2 region
+  if (ghL1Selected !== null) {
+    const { r, c } = l1ToL2Region(ghL1Selected);
+    const rx = L2.x + c * cw, ry = L2.y + r * ch;
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 2.5;
+    ctx.strokeRect(rx + 2, ry + 2, cw * 2 - 4, ch * 2 - 4);
+  }
+  // "layer 2" label
+  ctx.fillStyle = '#64748b'; ctx.font = '13px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+  ctx.fillText('layer 2', L2.x + L2.size/2, L2.y + L2.size + 10);
+
+  // ── Connecting lines (red) from L1 cell to L2 region ──
+  if (ghL1Selected !== null) {
+    const cell = ghL1Selected;
+    const { x: lx, y: ly, w: lw, h: lh } = l1Pos(cell, L1.x, L1.y, L1.size);
+    const { r, c } = l1ToL2Region(cell);
+    const rx = L2.x + c * cw, ry = L2.y + r * ch;
+    const rw = cw * 2, rh = ch * 2;
+
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 3]);
+
+    // Top-right corner of L1 cell → Top-left corner of L2 region
+    const corners = [
+      [[lx + lw, ly],       [rx,      ry     ]],
+      [[lx + lw, ly + lh],  [rx,      ry + rh]],
+    ];
+    corners.forEach(([[x1,y1],[x2,y2]]) => {
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+  }
+}
+
+document.getElementById('geohash-canvas').addEventListener('click', e => {
+  const cv = document.getElementById('geohash-canvas');
+  const rect = cv.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (cv.width / rect.width);
+  const my = (e.clientY - rect.top)  * (cv.height / rect.height);
+
+  // Check L1 click
+  const L1 = { x: 50, y: 60, size: 180 };
+  if (mx >= L1.x && mx <= L1.x + L1.size && my >= L1.y && my <= L1.y + L1.size) {
+    const col  = Math.floor((mx - L1.x) / (L1.size / 2));
+    const row  = Math.floor((my - L1.y) / (L1.size / 2));
+    const cell = row * 2 + col;
+    ghL1Selected = (ghL1Selected === cell) ? null : cell;
+    ghL2Selected = null;
+    updateGhDisplay();
+    drawGeohash(); return;
+  }
+
+  // Check L2 click
+  const L2 = { x: 330, y: 20, size: 280 };
+  if (mx >= L2.x && mx <= L2.x + L2.size && my >= L2.y && my <= L2.y + L2.size) {
+    const col = Math.floor((mx - L2.x) / (L2.size / 4));
+    const row = Math.floor((my - L2.y) / (L2.size / 4));
+    const lbl = l2Label(row, col);
+    ghL1Selected = l2Owner(row, col);
+    ghL2Selected = (ghL2Selected === lbl) ? null : lbl;
+    updateGhDisplay();
+    drawGeohash(); return;
+  }
+});
+
+function updateGhDisplay() {
+  const val  = ghL2Selected ? ghL2Selected : (ghL1Selected !== null ? String(ghL1Selected) : '—');
+  const size = ghL2Selected ? '~1,250 km area (illustrative layer 2)' :
+               ghL1Selected !== null ? '~5,000 km area (illustrative layer 1)' :
+               'Click a Layer-1 cell, then a Layer-2 cell';
+  document.getElementById('gh-val').textContent = val;
+  document.getElementById('gh-sz').textContent  = size;
+}
+
+function resetGeohash() {
+  ghL1Selected = null; ghL2Selected = null;
+  updateGhDisplay(); drawGeohash();
+}
+
+// ─────────────────────────────────────────────────────────────────
+// QUADTREE
+// ─────────────────────────────────────────────────────────────────
+const QT_K = 5;
+const QT_MAX_DEPTH = 7;
+const PT_COLORS = ['#ef4444','#3b82f6','#22c55e','#f97316','#a855f7','#ec4899'];
+const DEPTH_FILL = ['#1e3a8a','#1e40af','#1d4ed8','#2563eb','#3b82f6','#60a5fa','#93c5fd'];
+
+class QNode {
+  constructor(x, y, w, h, depth = 0) {
+    Object.assign(this, { x, y, w, h, depth });
+    this.points = []; this.children = null;
+  }
+  isLeaf() { return !this.children; }
+  contains(px, py) { return px >= this.x && px < this.x+this.w && py >= this.y && py < this.y+this.h; }
+  insert(px, py, color) {
+    if (!this.contains(px, py)) return false;
+    if (this.isLeaf()) {
+      this.points.push({ x: px, y: py, color });
+      if (this.points.length > QT_K && this.depth < QT_MAX_DEPTH) this.subdivide();
+      return true;
+    }
+    return this.children.some(c => c.insert(px, py, color));
+  }
+  subdivide() {
+    const hw = this.w/2, hh = this.h/2, d = this.depth + 1;
+    this.children = [
+      new QNode(this.x,    this.y,    hw, hh, d), // NW
+      new QNode(this.x+hw, this.y,    hw, hh, d), // NE
+      new QNode(this.x,    this.y+hh, hw, hh, d), // SW
+      new QNode(this.x+hw, this.y+hh, hw, hh, d), // SE
+    ];
+    this.points.forEach(p => this.children.some(c => c.insert(p.x, p.y, p.color)));
+    this.points = [];
+  }
+  countLeaves() { return this.isLeaf() ? 1 : this.children.reduce((s,c) => s+c.countLeaves(), 0); }
+  maxDepth()    { return this.isLeaf() ? this.depth : Math.max(...this.children.map(c => c.maxDepth())); }
+  totalPts()    { return this.isLeaf() ? this.points.length : this.children.reduce((s,c) => s+c.totalPts(), 0); }
+}
+
+let qtRoot = null;
+let ptColorIdx = 0;
+
+function drawQuadtree() {
+  const cv = document.getElementById('quadtree-canvas');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#0f172a'; ctx.fillRect(0, 0, cv.width, cv.height);
+  if (!qtRoot) initQT();
+  drawQNode(ctx, qtRoot);
+  ctx.strokeStyle = '#334155'; ctx.lineWidth = 1.5;
+  ctx.strokeRect(1, 1, cv.width-2, cv.height-2);
+}
+
+function drawQNode(ctx, node) {
+  if (!node.isLeaf()) { node.children.forEach(c => drawQNode(ctx, c)); return; }
+  const col = DEPTH_FILL[Math.min(node.depth, DEPTH_FILL.length-1)];
+  ctx.fillStyle = col + '2a'; ctx.fillRect(node.x, node.y, node.w, node.h);
+  ctx.strokeStyle = col + 'aa'; ctx.lineWidth = 1;
+  ctx.strokeRect(node.x+0.5, node.y+0.5, node.w-1, node.h-1);
+  // depth label for larger cells
+  if (node.w > 80 && node.h > 60) {
+    ctx.fillStyle = col + '55'; ctx.font = '11px monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('d' + node.depth, node.x + node.w/2, node.y + node.h/2);
+  }
+  // points
+  node.points.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, Math.PI*2);
+    ctx.fillStyle = p.color; ctx.fill();
+    ctx.strokeStyle = '#0f172a'; ctx.lineWidth = 1.5; ctx.stroke();
+  });
+}
+
+// ─── Tree diagram ───────────────────────────────────────────────
+function drawTree() {
+  const cv = document.getElementById('tree-canvas');
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#0f172a'; ctx.fillRect(0, 0, cv.width, cv.height);
+  if (!qtRoot) return;
+
+  // Compute tree layout: assign (x,y) to each visible node
+  const MAX_VIS_DEPTH = 4;
+  const PAD = 12, R = 7;
+  const usableW = cv.width - PAD*2;
+
+  function layout(node, xStart, xWidth, depth) {
+    node._tx = xStart + xWidth/2;
+    node._ty = PAD + depth * ((cv.height - PAD*2) / MAX_VIS_DEPTH);
+    node._vis = depth <= MAX_VIS_DEPTH;
+    if (!node.isLeaf() && depth < MAX_VIS_DEPTH) {
+      const cw = xWidth / 4;
+      node.children.forEach((child, i) => layout(child, xStart + i*cw, cw, depth+1));
+    }
+  }
+  layout(qtRoot, PAD, usableW, 0);
+
+  // Draw lines first
+  function drawLines(node) {
+    if (!node._vis || node.isLeaf() || node.depth >= MAX_VIS_DEPTH) return;
+    node.children.forEach(child => {
+      if (!child._vis) return;
+      ctx.beginPath(); ctx.moveTo(node._tx, node._ty + R); ctx.lineTo(child._tx, child._ty - R);
+      ctx.strokeStyle = '#334155'; ctx.lineWidth = 1; ctx.stroke();
+      drawLines(child);
+    });
+  }
+  drawLines(qtRoot);
+
+  // Draw nodes
+  function drawNodes(node) {
+    if (!node._vis) return;
+    ctx.beginPath(); ctx.arc(node._tx, node._ty, R, 0, Math.PI*2);
+    if (node.isLeaf()) {
+      // Leaf — filled circle with ring (like image)
+      ctx.fillStyle = '#22c55e'; ctx.fill();
+      ctx.strokeStyle = '#15803d'; ctx.lineWidth = 1.5; ctx.stroke();
+      // Inner dot
+      ctx.beginPath(); ctx.arc(node._tx, node._ty, R*0.45, 0, Math.PI*2);
+      ctx.fillStyle = '#0f172a'; ctx.fill();
+    } else {
+      // Internal — open circle
+      ctx.fillStyle = '#0f172a'; ctx.fill();
+      ctx.strokeStyle = '#64748b'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+    if (!node.isLeaf() && node.depth < MAX_VIS_DEPTH) node.children.forEach(drawNodes);
+  }
+  drawNodes(qtRoot);
+
+  // "..." indicator if tree is deeper than MAX_VIS_DEPTH
+  if (qtRoot.maxDepth() > MAX_VIS_DEPTH) {
+    ctx.fillStyle = '#475569'; ctx.font = '11px monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'bottom';
+    ctx.fillText('...', cv.width/2, cv.height - 4);
+  }
+}
+
+function initQT() {
+  const cv = document.getElementById('quadtree-canvas');
+  qtRoot = new QNode(0, 0, cv.width, cv.height, 0);
+}
+
+function resetQuadtree() {
+  ptColorIdx = 0; initQT(); drawQuadtree(); drawTree(); updateQtStats();
+}
+
+function updateQtStats() {
+  if (!qtRoot) return;
+  document.getElementById('qt-pts').textContent   = qtRoot.totalPts();
+  document.getElementById('qt-cells').textContent  = qtRoot.countLeaves();
+  document.getElementById('qt-depth').textContent  = qtRoot.totalPts() > 0 ? qtRoot.maxDepth() : 0;
+}
+
+document.getElementById('quadtree-canvas').addEventListener('click', e => {
+  const cv = document.getElementById('quadtree-canvas');
+  const rect = cv.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (cv.width  / rect.width);
+  const y = (e.clientY - rect.top)  * (cv.height / rect.height);
+  if (!qtRoot) initQT();
+  const color = PT_COLORS[ptColorIdx % PT_COLORS.length];
+  ptColorIdx++;
+  qtRoot.insert(x, y, color);
+  drawQuadtree(); drawTree(); updateQtStats();
+});
+
+// ─────────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  drawGeohash();
+  initQT(); drawQuadtree(); drawTree(); updateQtStats();
+});
+</script>
+</body>
+</html>
