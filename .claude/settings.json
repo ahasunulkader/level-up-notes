@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng build)",
+      "Bash(mkdir -p \"d:/Learn/level-up-notes/src/assets/docs/Resume\")",
+      "mcp__claude_ai_Gmail__search_threads",
+      "Bash(mkdir -p \"d:/Learn/level-up-notes/rag-learning\")",
+      "Bash(python -m venv venv)",
+      "Bash(venv/Scripts/python.exe -m pip install --quiet --upgrade pip)",
+      "Bash(venv/Scripts/python.exe -m pip install --quiet -r requirements.txt)",
+      "Bash(venv/Scripts/python.exe query.py)",
+      "Bash(git checkout *)",
+      "Bash(git add *)",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Bash(mkdir -p \"/d/Learn/rag-from-scratch\" && ls \"/d/Learn/rag-from-scratch\")"
+    ],
+    "additionalDirectories": [
+      "d:\\Learn\\learning-tracker\\src\\app\\features\\tracker\\components\\progress-bar",
+      "d:\\Learn\\learning-tracker\\src\\app\\features\\tracker\\components\\topic-card",
+      "d:\\Learn\\learning-tracker\\src\\app\\features\\tracker\\components\\topic-form",
+      "d:\\Learn\\learning-tracker\\src\\app\\shared\\pipes",
+      "d:\\Learn\\learning-tracker\\src\\app\\features\\tracker",
+      "d:\\Learn\\learning-tracker\\src\\app",
+      "d:\\Learn\\learning-tracker\\src",
+      "d:\\Learn\\level-up-notes\\src\\assets\\docs\\PHP",
+      "d:\\Learn\\level-up-notes\\src\\assets\\docs",
+      "d:\\Learn\\level-up-notes",
+      "D:\\Learn"
+    ]
+  }
+}

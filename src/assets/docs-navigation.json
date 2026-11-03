@@ -443,7 +443,129 @@
           },
           {
             "label": "Advanced SQL & DB Programmability (Java & PHP)",
-            "route": "Data-and-Persistence/advanced-sql-programmability"
+            "children": [
+              {
+                "label": "Overview",
+                "route": "Data-and-Persistence/advanced-sql-programmability"
+              },
+              {
+                "label": "Joins",
+                "route": "Data-and-Persistence/advanced-sql/joins"
+              },
+              {
+                "label": "Indexes",
+                "route": "Data-and-Persistence/advanced-sql/indexes"
+              },
+              {
+                "label": "Constraints",
+                "route": "Data-and-Persistence/advanced-sql/constraints"
+              },
+              {
+                "label": "Views",
+                "route": "Data-and-Persistence/advanced-sql/views"
+              },
+              {
+                "label": "Triggers",
+                "route": "Data-and-Persistence/advanced-sql/triggers"
+              },
+              {
+                "label": "Stored Procedures",
+                "route": "Data-and-Persistence/advanced-sql/stored-procedures"
+              },
+              {
+                "label": "Functions",
+                "route": "Data-and-Persistence/advanced-sql/functions"
+              },
+              {
+                "label": "Variables",
+                "route": "Data-and-Persistence/advanced-sql/variables"
+              },
+              {
+                "label": "Query Performance — Profiling & Optimization",
+                "route": "Data-and-Persistence/advanced-sql/query-performance"
+              },
+              {
+                "label": "Subqueries",
+                "route": "Data-and-Persistence/advanced-sql/subqueries"
+              },
+              {
+                "label": "CTEs (Common Table Expressions)",
+                "route": "Data-and-Persistence/advanced-sql/ctes"
+              },
+              {
+                "label": "Set Operations",
+                "route": "Data-and-Persistence/advanced-sql/set-operations"
+              },
+              {
+                "label": "Handling JSON",
+                "route": "Data-and-Persistence/advanced-sql/handling-json"
+              },
+              {
+                "label": "Transactions & Rollback",
+                "route": "Data-and-Persistence/advanced-sql/transactions-and-rollback"
+              },
+              {
+                "label": "Partitioning & Sharding",
+                "route": "Data-and-Persistence/advanced-sql/partitioning-and-sharding"
+              },
+              {
+                "label": "Window Functions",
+                "route": "Data-and-Persistence/advanced-sql/window-functions"
+              },
+              {
+                "label": "Locking, Deadlocks & Upsert",
+                "route": "Data-and-Persistence/advanced-sql/locking-and-deadlocks"
+              },
+              {
+                "label": "Normalization & Denormalization",
+                "route": "Data-and-Persistence/advanced-sql/normalization"
+              },
+              {
+                "label": "Replication, HA & Backup",
+                "route": "Data-and-Persistence/advanced-sql/replication-and-high-availability"
+              },
+              {
+                "label": "Database Security",
+                "route": "Data-and-Persistence/advanced-sql/database-security"
+              },
+              {
+                "label": "LATERAL Joins & Pivot",
+                "route": "Data-and-Persistence/advanced-sql/lateral-and-pivot"
+              },
+              {
+                "label": "Cursors & Batch Processing",
+                "route": "Data-and-Persistence/advanced-sql/cursors-and-batch-processing"
+              },
+              {
+                "label": "Connection Pooling",
+                "route": "Data-and-Persistence/advanced-sql/connection-pooling"
+              },
+              {
+                "label": "MVCC & Storage Internals",
+                "route": "Data-and-Persistence/advanced-sql/mvcc-and-storage-internals"
+              },
+              {
+                "label": "Query Optimizer Internals",
+                "route": "Data-and-Persistence/advanced-sql/query-optimizer-internals"
+              },
+              {
+                "label": "Distributed Transactions (2PC, Saga, Outbox)",
+                "route": "Data-and-Persistence/advanced-sql/distributed-transactions"
+              },
+              {
+                "label": "Change Data Capture & Event Sourcing",
+                "route": "Data-and-Persistence/advanced-sql/change-data-capture"
+              },
+              {
+                "label": "Temporal Tables, Audit & Soft Delete",
+                "route": "Data-and-Persistence/advanced-sql/temporal-tables-and-soft-delete"
+              },
+              {
+                "label": "Interview Q&A (SSE Backend style)",
+                "route": "Data-and-Persistence/advanced-sql/interview-qa"
+              }
+            ],
+            "expanded": false
           }
         ],
         "expanded": false
